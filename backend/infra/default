@@ -1,0 +1,74 @@
+server {
+   listen 80;
+   server_name 158.160.6.60 svetvik.hopto.org;
+   location /api/ {
+	proxy_pass http://127.0.0.1:8080;
+   }
+
+   location /admin/ {
+	proxy_pass http://127.0.0.1:8080;
+   }
+ 
+   location /media/ {
+	alias /var/www/infra_sprint1/media/;
+	try_files $uri =404;
+   }
+
+   location / {
+	root /var/www/infra_sprint1;
+	index index.html index.html;
+	try_files $uri /index.html;
+   }
+
+   listen 443 ssl;
+   ssl_certificate /etc/letsencrypt/live/svetvik.hopto.org/fullchain.pem;
+   ssl_certificate_key /etc/letsrncrypt/live/svetvik.hopto,org/privkey.pem;
+   include /etc/letsencrypt/options-ssl-nginx.conf;
+   ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+}
+server {
+   if ($host = svetvik.hopto.org) {
+	return 301 https://$host$request_uri;
+   }
+
+   listen 80;
+   server_name 158.160.6.60 svetvik.hopto.org;
+   return 404;
+
+}
+
+server {
+   server_name 158.160.6.60 mmmsvetlichnaya.ddns.net;
+
+   location /api/ {
+	proxy_pass http://127.0.0.1:8000;
+   }
+
+   location /admin/ {
+        proxy_pass http://127.0.0.1:8000;
+   }
+   
+   location / {
+        root /var/www/taski;
+        index index.html index.html;
+        try_files $uri /index.html;
+   }
+
+   listen 443 ssl;
+   ssl_certificate /etc/letsencrypt/live/mmmsvetlichnaya.ddns.net/fullchain.pem;
+   ssl_certificate_key /etc/letsrncrypt/live/mmmsvetlichnayya.ddns.net/privkey.pem;
+   include /etc/letsencrypt/options-ssl-nginx.conf;
+   ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+
+server {
+   if ($host = mmmsvetlichnaya.ddns.net) {
+        return 301 https://$host$request_uri;
+   }
+
+   listen 80;
+   server_name 158.160.6.60 mmmsvetlichnaya.ddns.org;
+   return 404;
+
+}
