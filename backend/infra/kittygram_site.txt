@@ -1,5 +1,0 @@
-IP: 158.160.6.60;
-name_taski: https://mmmsvetlichnaya.ddns.net;
-name_kittygram: https://svetvik.hopto.org;
-login: maria;
-password: 1;
